@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "web-vitals": "^4.2.4",
+    "zkapp-cli": "^0.22.4"
+  }
+}

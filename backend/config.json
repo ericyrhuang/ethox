@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "deployAliases": {
+    "testnet": {
+      "networkId": "devnet",
+      "url": "https://proxy.devnet.minaexplorer.com/graphql",
+      "keyPath": "keys/testnet.json",
+      "feepayerKeyPath": "/Users/suleimanmahmood/.cache/zkapp-cli/keys/sul.json",
+      "feepayerAlias": "sul",
+      "fee": "0.1",
+      "smartContract": "Add"
+    }
+  }
+}
