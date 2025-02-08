@@ -21,7 +21,7 @@ jobs:
           node-version: '18'  # or your preferred Node.js version
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci  # Using ci instead of install for more reliable builds
 
       - name: Build
         run: npm run build
@@ -29,5 +29,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist  # or your build output directory
+          folder: build  # Changed from dist to build for React
           branch: gh-pages 
