@@ -9,6 +9,15 @@
       "feepayerAlias": "sul",
       "fee": "0.1",
       "smartContract": "Add"
+    },
+    "testeric": {
+      "networkId": "testnet",
+      "url": "https://proxy.devnet.minaexplorer.com/graphql",
+      "keyPath": "keys/testeric.json",
+      "feepayerKeyPath": "/Users/eric/.cache/zkapp-cli/keys/eric.json",
+      "feepayerAlias": "eric",
+      "fee": "0.1",
+      "smartContract": "Add"
     }
   }
 }
