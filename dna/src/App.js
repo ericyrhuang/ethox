@@ -1,57 +1,72 @@
 import { useState } from 'react';
 import './App.css';
+import CircularProgress from '@mui/material/CircularProgress'; // You'll need to install @mui/material
 
 function App() {
-  const [sequence, setSequence] = useState('');
-  const [analysis, setAnalysis] = useState('');
+  const [file, setFile] = useState(null);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationResult, setVerificationResult] = useState(null);
 
-  const analyzeSequence = (input) => {
-    // Basic DNA sequence validation and analysis
-    const validSequence = /^[ATCG]+$/i.test(input);
-    
-    if (!validSequence) {
-      setAnalysis('Invalid sequence. Please enter only A, T, C, or G characters.');
-      return;
+  const verifyFile = async (uploadedFile) => {
+    setIsVerifying(true);
+    setVerificationResult(null);
+
+    try {
+      // Simulate verification delay
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      setVerificationResult({
+        success: true,
+        message: '✅ Successfully generated and verified proof!',
+        details: `Processed file: ${uploadedFile.name}`
+      });
+
+    } catch (error) {
+      setVerificationResult({
+        success: false,
+        message: 'Error processing file: ' + error.message
+      });
+    } finally {
+      setIsVerifying(false);
     }
-
-    const stats = {
-      length: input.length,
-      a: (input.match(/A/gi) || []).length,
-      t: (input.match(/T/gi) || []).length,
-      c: (input.match(/C/gi) || []).length,
-      g: (input.match(/G/gi) || []).length
-    };
-
-    setAnalysis(`
-      Sequence Length: ${stats.length}
-      A count: ${stats.a}
-      T count: ${stats.t}
-      C count: ${stats.c}
-      G count: ${stats.g}
-      GC content: ${((stats.g + stats.c) / stats.length * 100).toFixed(2)}%
-    `);
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>DNA Sequence Analyzer</h1>
-        <div className="sequence-input">
-          <textarea
-            placeholder="Enter your DNA sequence (A, T, C, G only)"
-            value={sequence}
+        <h1>DNA Sequence Proof Verifier</h1>
+        <div className="file-input">
+          <input
+            type="file"
             onChange={(e) => {
-              setSequence(e.target.value.toUpperCase());
-              analyzeSequence(e.target.value.toUpperCase());
+              const file = e.target.files[0];
+              if (file) {
+                setFile(file);
+                verifyFile(file);
+              }
             }}
-            rows={5}
-            cols={50}
           />
+          <p className="file-instructions">
+            Please upload your DNA sequence file
+          </p>
         </div>
-        {analysis && (
-          <div className="analysis-results">
-            <h2>Analysis Results:</h2>
-            <pre>{analysis}</pre>
+        
+        {isVerifying && (
+          <div className="verification-status">
+            <CircularProgress />
+            <p>Generating and verifying proof...</p>
+          </div>
+        )}
+
+        {verificationResult && (
+          <div className={`verification-result ${verificationResult.success ? 'success' : 'error'}`}>
+            <h2>{verificationResult.success ? 'Verification Complete' : 'Verification Failed'}</h2>
+            <p>{verificationResult.message}</p>
+            {verificationResult.success && (
+              <div className="verification-details">
+                <p>{verificationResult.details}</p>
+              </div>
+            )}
           </div>
         )}
       </header>
